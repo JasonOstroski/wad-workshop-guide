@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bluebox Workshop — WeAreDevelopers</title>
+<style>
+  :root {
+    --blue: #1A56DB;
+    --blue-dark: #1E40AF;
+    --blue-light: #EFF6FF;
+    --blue-mid: #DBEAFE;
+    --dark: #111827;
+    --gray: #6B7280;
+    --gray-light: #F3F4F6;
+    --gray-mid: #E5E7EB;
+    --gray-border: #D1D5DB;
+    --yellow-bg: #FFFBEB;
+    --yellow: #D97706;
+    --green: #059669;
+    --green-bg: #ECFDF5;
+    --red: #DC2626;
+    --red-bg: #FEF2F2;
+    --white: #FFFFFF;
+    --sidebar-w: 260px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    color: var(--dark);
+    background: var(--white);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── Sidebar ──────────────────────────────── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--dark);
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-header {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .logo-box {
+    width: 28px; height: 28px;
+    background: var(--blue);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: white;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text {
+    font-size: 15px; font-weight: 700; color: white;
+  }
+
+  .sidebar-subtitle {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .nav-section {
+    padding: 6px 0;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding: 12px 18px 4px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .nav-link.active {
+    color: white;
+    border-left-color: var(--blue);
+    background: rgba(26,86,219,0.15);
+  }
+
+  .nav-link .badge {
+    margin-left: auto;
+    background: var(--blue);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  .nav-link .badge.opt {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── Main content ─────────────────────────── */
+  .main {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+  }
+
+  /* ── Hero ─────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 60%, #1A56DB 100%);
+    color: white;
+    padding: 60px 64px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-event-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    max-width: 620px;
+  }
+
+  .hero h1 span {
+    color: #93C5FD;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    max-width: 560px;
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .hero-meta-item strong {
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* ── Content sections ─────────────────────── */
+  .content-section {
+    padding: 56px 64px;
+    border-bottom: 1px solid var(--gray-mid);
+    max-width: 900px;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 16px;
+    line-height: 1.25;
+  }
+
+  .section-intro {
+    font-size: 15.5px;
+    color: #374151;
+    line-height: 1.75;
+    margin-bottom: 28px;
+    max-width: 720px;
+  }
+
+  /* ── Lab header ───────────────────────────── */
+  .lab-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .lab-number {
+    width: 44px; height: 44px;
+    background: var(--blue);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 800; color: white;
+    flex-shrink: 0;
+  }
+
+  .lab-number.optional {
+    background: var(--gray);
+  }
+
+  /* ── Steps ────────────────────────────────── */
+  .step {
+    margin-bottom: 36px;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .step-num {
+    width: 28px; height: 28px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+
+  .step-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .step-body {
+    padding-left: 40px;
+  }
+
+  .step-body p {
+    margin-bottom: 12px;
+    color: #374151;
+    line-height: 1.7;
+  }
+
+  /* ── Path chooser ─────────────────────────── */
+  .path-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .path-card {
+    border: 2px solid var(--gray-mid);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+
+  .path-card.primary {
+    border-color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  .path-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .path-tag.recommended {
+    background: var(--blue);
+    color: white;
+  }
+
+  .path-tag.alternative {
+    background: var(--gray-mid);
+    color: var(--gray);
+  }
+
+  .path-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+
+  .path-card p {
+    font-size: 13.5px;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* ── Code blocks ──────────────────────────── */
+  .code-block {
+    background: #0F172A;
+    border-radius: 10px;
+    margin: 14px 0;
+    overflow: hidden;
+  }
+
+  .code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .code-lang {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .copy-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.8);
+  }
+
+  .copy-btn.copied {
+    border-color: var(--green);
+    color: #34D399;
+  }
+
+  .code-block pre {
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.65;
+    color: #E2E8F0;
+  }
+
+  .code-block pre .comment { color: #64748B; }
+  .code-block pre .cmd { color: #93C5FD; }
+  .code-block pre .str { color: #86EFAC; }
+  .code-block pre .key { color: #FCA5A5; }
+
+  /* ── Inline code ──────────────────────────── */
+  code {
+    background: var(--gray-light);
+    border: 1px solid var(--gray-mid);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: #1E3A8A;
+  }
+
+  /* ── Callouts ─────────────────────────────── */
+  .callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    border-left: 4px solid;
+  }
+
+  .callout.tip {
+    background: var(--blue-light);
+    border-color: var(--blue);
+  }
+
+  .callout.warning {
+    background: var(--yellow-bg);
+    border-color: var(--yellow);
+  }
+
+  .callout.note {
+    background: var(--gray-light);
+    border-color: var(--gray-border);
+  }
+
+  .callout.success {
+    background: var(--green-bg);
+    border-color: var(--green);
+  }
+
+  .callout-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .callout-body {
+    flex: 1;
+  }
+
+  .callout-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .callout.tip .callout-label { color: var(--blue); }
+  .callout.warning .callout-label { color: var(--yellow); }
+  .callout.note .callout-label { color: var(--gray); }
+  .callout.success .callout-label { color: var(--green); }
+
+  .callout p {
+    font-size: 14px;
+    color: var(--dark);
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* ── Checklist ────────────────────────────── */
+  .checklist {
+    background: var(--gray-light);
+    border: 1px solid var(--gray-mid);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+
+  .checklist h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray);
+    margin-bottom: 12px;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--dark);
+  }
+
+  .checklist-item:last-child { margin-bottom: 0; }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--gray-border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    background: white;
+  }
+
+  /* ── Prompt box ───────────────────────────── */
+  .prompt-box {
+    background: #F0F9FF;
+    border: 1px solid #BAE6FD;
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 16px 0;
+  }
+
+  .prompt-box .prompt-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .prompt-box p {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #0C4A6E;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    margin: 0;
+  }
+
+  /* ── Bullets ──────────────────────────────── */
+  ul.steps-list {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 12px 0;
+  }
+
+  ul.steps-list li {
+    padding: 3px 0;
+    font-size: 14.5px;
+    color: #374151;
+    line-height: 1.65;
+  }
+
+  ol.steps-list {
+    padding-left: 20px;
+    margin: 12px 0;
+  }
+
+  ol.steps-list li {
+    padding: 4px 0 4px 6px;
+    font-size: 14.5px;
+    color: #374151;
+    line-height: 1.65;
+  }
+
+  /* ── Divider ──────────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--gray-mid);
+    margin: 28px 0;
+  }
+
+  /* ── Tab selector ─────────────────────────── */
+  .tab-group { margin: 20px 0; }
+
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid var(--gray-mid);
+    margin-bottom: 20px;
+  }
+
+  .tab-btn {
+    padding: 8px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--gray);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.15s;
+  }
+
+  .tab-btn.active {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── Scenario badge ───────────────────────── */
+  .scenario-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #92400E;
+    margin: 8px 0 16px;
+  }
+
+  /* ── Workflow diagram ─────────────────────── */
+  .workflow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 24px 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .workflow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 90px;
+  }
+
+  .workflow-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    background: var(--blue-light);
+    border: 2px solid var(--blue-mid);
+  }
+
+  .workflow-step span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .workflow-arrow {
+    font-size: 18px;
+    color: var(--gray-border);
+    padding: 0 4px;
+    margin-bottom: 22px;
+  }
+
+  /* ── h3 ───────────────────────────────────── */
+  h3.subsection {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 28px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gray-mid);
+  }
+
+  /* ── What is Bluebox cards ────────────────── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .feature-card {
+    background: var(--gray-light);
+    border-radius: 10px;
+    padding: 18px;
+    border: 1px solid var(--gray-mid);
+  }
+
+  .feature-card .icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .feature-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--dark);
+  }
+
+  .feature-card p {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Footer ───────────────────────────────── */
+  .footer {
+    padding: 32px 64px;
+    background: var(--gray-light);
+    border-top: 1px solid var(--gray-mid);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+  }
+
+  .footer p {
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  .footer a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  /* ── Mobile ───────────────────────────────── */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px; left: 12px;
+    z-index: 200;
+    background: var(--blue);
+    border: none;
+    border-radius: 8px;
+    width: 40px; height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .menu-toggle { display: flex; align-items: center; justify-content: center; }
+    .hero { padding: 52px 24px 36px; }
+    .hero h1 { font-size: 26px; }
+    .content-section { padding: 36px 24px; }
+    .path-grid { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="logo-box">B</div>
+      <span class="logo-text">Bluebox</span>
+    </div>
+    <div class="sidebar-subtitle">WeAreDevelopers Workshop</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Introduction</div>
+    <a href="#overview" class="nav-link active">🗺️ Overview</a>
+    <a href="#connections" class="nav-link">🔌 Connections Setup</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Labs</div>
+    <a href="#lab1" class="nav-link">🔍 Lab 1 — Find &amp; Fix <span class="badge">45 min</span></a>
+    <a href="#lab2" class="nav-link">🚀 Lab 2 — Plan &amp; Build <span class="badge">45 min</span></a>
+    <a href="#lab3" class="nav-link">⭐ Lab 3 — Your Own App <span class="badge opt">Optional</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Resources</div>
+    <a href="#troubleshooting" class="nav-link">🔧 Troubleshooting</a>
+    <a href="https://docs.bluebox.ai" class="nav-link" target="_blank">📖 Bluebox Docs</a>
+    <a href="https://github.com/JasonOstroski/wad-workshop2026" class="nav-link" target="_blank">💻 Demo App Repo</a>
+    <a href="https://bluebox.ai" class="nav-link" target="_blank">🌐 bluebox.ai</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════ MAIN ═══════════════════ -->
+<main class="main">
+
+  <!-- ── HERO ─────────────────────────────── -->
+  <div class="hero" id="overview">
+    <div class="hero-event-tag">⚡ WeAreDevelopers Workshop</div>
+    <h1>AI-Powered Dev &amp; SRE Workflows<br><span>with Bluebox</span></h1>
+    <div class="hero-meta">
+      <div class="hero-meta-item">⏱ <strong>90–120 minutes</strong></div>
+      <div class="hero-meta-item">🎯 <strong>Developers &amp; SREs</strong></div>
+      <div class="hero-meta-item">☁️ <strong>Runs in Codespace — nothing to install</strong></div>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ──────────────────────────── -->
+  <section class="content-section">
+    <div class="section-eyebrow">What you'll build</div>
+    <div class="section-title">From blind spots to shipped fixes — in one session</div>
+    <p class="section-intro">In this workshop you'll use Bluebox — an AI SRE agent — alongside your coding agent to spin up a live ecommerce app, watch Bluebox investigate a real production problem in real time, and leverage those insights to code and deploy the fix. All driven by actual production telemetry rather than guesswork.</p>
+
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="workflow-icon">🔌</div>
+        <span>Connect app to Bluebox</span>
+      </div>
+      <div class="workflow-arrow">→</div>
+      <div class="workflow-step">
+        <div class="workflow-icon">🔥</div>
+        <span>Generate load &amp; break it</span>
+      </div>
+      <div class="workflow-arrow">→</div>
+      <div class="workflow-step">
+        <div class="workflow-icon">🔍</div>
+        <span>Bluebox investigates</span>
+      </div>
+      <div class="workflow-arrow">→</div>
+      <div class="workflow-step">
+        <div class="workflow-icon">🐙</div>
+        <span>Issue created on GitHub</span>
+      </div>
+      <div class="workflow-arrow">→</div>
+      <div class="workflow-step">
+        <div class="workflow-icon">🤖</div>
+        <span>Coding agent fixes &amp; PRs</span>
+      </div>
+      <div class="workflow-arrow">→</div>
+      <div class="workflow-step">
+        <div class="workflow-icon">✅</div>
+        <span>Validate with Bluebox</span>
+      </div>
+    </div>
+
+    <h3 class="subsection">What's in this workshop</h3>
+    <div class="feature-grid" style="margin-bottom: 28px;">
+      <div class="feature-card">
+        <div class="icon">🔍</div>
+        <h4>Lab 1 — Find &amp; Fix</h4>
+        <p>Generate load on a broken app, watch Bluebox investigate the root cause, create a GitHub issue from the findings, and have your coding agent write and deploy the fix — grounded in production evidence.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🚀</div>
+        <h4>Lab 2 — Plan &amp; Build</h4>
+        <p>Before writing a single line, your coding agent checks production health with Bluebox, uses live telemetry to plan a new feature, then predicts what breaks at 100× traffic before the marketing campaign goes live.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⭐</div>
+        <h4>Optional Lab 3 — Your App</h4>
+        <p>Connect your own production app to Bluebox. Add OpenTelemetry, deploy, and start running the same workflows against your real services. Your Bluebox account is free to keep after the workshop.</p>
+      </div>
+    </div>
+
+    <h3 class="subsection">What is Bluebox?</h3>
+
+    <div style="background: var(--dark); border-radius: 10px; padding: 20px 24px; margin-bottom: 20px;">
+      <p style="font-size: 17px; font-style: italic; color: #93C5FD; line-height: 1.7; margin: 0;">
+        "Your coding agent plans, codes, reviews, and ships. But it can't see what happens after the merge.<br><strong style="color: white;">Bluebox can.</strong>"
+      </p>
+    </div>
+
+    <p style="margin-bottom: 20px; color: #374151; line-height: 1.75;">Bluebox is a new offering built (with ❤️) by the AI and observability experts at Dynatrace. It's a standalone product — no Dynatrace knowledge or existing Dynatrace implementation required to get started. It continuously analyzes OpenTelemetry data from your running services, detects problems automatically, and investigates root causes so you don't have to dig through logs and dashboards yourself. When it finds something, it creates a GitHub issue with the full evidence trail attached — ready for you or your coding agent to act on. Bluebox also adds a code intelligence layer, giving your coding agent real production context so it can write new features and fixes with less prompting and fewer iterations.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">🧠</div>
+        <h4>Plan Before You Prompt</h4>
+        <p>Briefs your coding agent with live production context before it writes a line — so it fits your system the first time, with no expensive re-prompts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔬</div>
+        <h4>Find Issues Before They're Issues</h4>
+        <p>Monitors production signals continuously. When something breaks, Bluebox investigates with full runtime context and pinpoints the root cause in your code.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🤝</div>
+        <h4>Hand the Fix to Your Agent</h4>
+        <p>Creates a GitHub issue with the full evidence trail attached. Your coding agent picks it up, builds the fix, and Bluebox confirms it held after deploy.</p>
+      </div>
+    </div>
+
+    <p style="color: var(--gray); font-style: italic; font-size: 14px; margin-top: 4px; margin-bottom: 24px;">Bluebox is the missing production observability layer. It checks what your agent can't see, so you can merge with confidence.</p>
+
+    <h3 class="subsection">The demo app: Workshop Shop</h3>
+    <p style="color: #374151; line-height: 1.75; margin-bottom: 12px;">Workshop Shop is a small ecommerce app — products, a cart, checkout, and a payment service — backed by PostgreSQL. It has intentional production problems baked in, so you'll see exactly what Bluebox detects in real workloads.</p>
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <div class="callout-label">No local setup required</div>
+        <p>Everything runs in a GitHub Codespace. You need a GitHub account and a browser — no installs required on your machine.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- CONNECTIONS                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section" id="connections">
+    <div class="section-eyebrow">Getting Started</div>
+    <div class="section-title">Connections Setup</div>
+    <p class="section-intro">Before the labs, you'll connect three things: Bluebox, the demo app running in a Codespace, and your coding agent. Choose the path that matches your setup — you only need one.</p>
+
+    <!-- PATH CHOOSER -->
+    <div class="path-grid">
+      <div class="path-card primary">
+        <div class="path-tag recommended">Easiest</div>
+        <h4>🐙 GitHub Ecosystem</h4>
+        <p>Use GitHub Copilot as your coding agent inside VS Code in Codespace. Everything — app, agent, and code — stays in the browser.</p>
+      </div>
+      <div class="path-card">
+        <div class="path-tag alternative">BYO Agent</div>
+        <h4>🤖 Kiro (or any agent)</h4>
+        <p>Use Kiro IDE or Kiro Web as your coding agent. The demo app still runs in Codespace; Kiro connects to Bluebox from your machine. Any other agent works too.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="callout-icon">ℹ️</div>
+      <div class="callout-body">
+        <div class="callout-label">Kiro licenses</div>
+        <p>If you want to try Kiro, our friends at AWS have provided some trial licenses. Ask your instructor for a code. Kiro IDE works on macOS, Windows, and Linux; Kiro Web runs in any browser. While these codes will work after the workshop, they must be claimed before Oct 1 and will expire on Nov 1.</p>
+      </div>
+    </div>
+
+    <!-- STEP 1: Sign in to Bluebox -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Sign in to Bluebox</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Go to <a href="https://bluebox.ai" target="_blank"><strong>bluebox.ai</strong></a>.</li>
+          <li>Select <strong>Sign in with GitHub</strong> and sign in with your GitHub account.</li>
+        </ol>
+
+        <div class="callout tip">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-label">New to Bluebox?</div>
+            <p>Bluebox automatically creates a default workspace when you sign up. You're good to go — continue to the next step.</p>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body">
+            <div class="callout-label">Already used Bluebox with this GitHub account?</div>
+            <p>Each workspace connects to one repository. If your existing workspace already has a repo connected, create a fresh one for today's workshop so you start clean. To do this: open the workspace menu in the top-left of Bluebox → <strong>Settings → Add workspace</strong>, give it a name, and use it for the rest of the lab.</p>
+          </div>
+        </div>
+
+        <div class="callout note">
+          <div class="callout-icon">ℹ️</div>
+          <div class="callout-body">
+            <div class="callout-label">Note</div>
+            <p>Today's lab uses Codespaces and the free tier of GitHub Copilot licenses. If you've already used up your allotted licensing before the workshop, you can spin up a new personal GitHub account to use today.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Fork the repo -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Fork the demo app repo</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Go to <a href="https://github.com/JasonOstroski/wad-workshop2026" target="_blank"><strong>github.com/JasonOstroski/wad-workshop2026</strong></a> and fork it to your personal GitHub account.</li>
+        </ol>
+        <img src="fork-repo.png" alt="GitHub repo page showing the Fork button and Create a new fork option" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 12px 0 16px;" />
+        <ol class="steps-list" start="2">
+          <li>Go to your fork's <strong>Settings → Features</strong> and confirm:
+            <ul class="steps-list" style="margin-top: 6px;">
+              <li>The <strong>Issues</strong> feature — toggled on</li>
+              <li><strong>Issue permissions → Creation allowed by</strong> — set to <strong>All users</strong></li>
+            </ul>
+          </li>
+        </ol>
+        <img src="github-issues-settings.png" alt="GitHub Settings showing Issues enabled and creation allowed by all users" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 12px 0 4px;" />
+        <div class="callout note">
+          <div class="callout-icon">ℹ️</div>
+          <div class="callout-body">
+            <div class="callout-label">Why fork?</div>
+            <p>You need your own fork so Bluebox can create issues and your coding agent can push branches and open pull requests.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Connect GitHub to Bluebox -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Connect your fork to Bluebox</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>In Bluebox, go to <strong>Setup</strong> from the left sidebar.</li>
+          <li>Under <strong>Connect GitHub repositories</strong>, click <strong>Connect with GitHub</strong> and grant access to your <code>wad-workshop2026</code> fork.</li>
+        </ol>
+        <img src="bluebox-setup.png" alt="Bluebox Setup page showing the Connect GitHub repositories step with Connect with GitHub button" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 12px 0 4px;" />
+        <div class="callout note">
+          <div class="callout-icon">ℹ️</div>
+          <div class="callout-body">
+            <div class="callout-label">Bluebox GitHub App</div>
+            <p>You may be prompted to install and configure access for the Bluebox GitHub App. Follow the prompts to authorize it for your personal account and grant access to your <code>wad-workshop2026</code> fork.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Open Codespace & configure OTel -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Open a Codespace and configure telemetry</div>
+      </div>
+      <div class="step-body">
+        <p>GitHub Codespaces is a cloud-hosted development environment that runs directly in your browser. It gives you a full VS Code editor, a terminal, and a running Linux environment — no local setup needed. For this workshop, it's where the demo app will run (and if you chose, where you'll run your IDE and coding agent).</p>
+        <ol class="steps-list">
+          <li>On your fork's GitHub page, click <strong>Code → Codespaces → Create codespace on main</strong>.</li>
+        </ol>
+        <img src="codespace-create.png" alt="GitHub Code menu showing Codespaces tab with Create a codespace on main option" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 12px 0 16px;" />
+        <div class="callout tip">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-label">How OTel works with Bluebox</div>
+            <p>When using your own app, Bluebox's instrumentation skill can automatically add OpenTelemetry to your project to get runtime metrics, logs, and traces.</p>
+            <p>In this demo app, OTel is already wired up — you just need to add your connection details so it points to your Bluebox instance.</p>
+            <p>More on Bluebox's skills in the next step.</p>
+          </div>
+        </div>
+        <ol class="steps-list" start="2">
+          <li>In the Bluebox sidebar, go to <strong>Setup</strong>.</li>
+          <li>Navigate to <strong>Instrument your services</strong>.</li>
+          <li>Copy your <strong>OpenTelemetry endpoint</strong> and <strong>ingest token</strong>.</li>
+        </ol>
+        <img src="bluebox-otel.png" alt="Bluebox Setup showing the Instrument your services section with OTLP endpoint and ingest token" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 8px 0 16px;" />
+        <ol class="steps-list" start="5">
+          <li>In the Codespace terminal, set both variables and start the app. Make sure to include <code>Authorization=Bearer</code> in the ingest token:</li>
+        </ol>
+
+        <div class="callout warning">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body">
+            <div class="callout-label">Never commit the ingest token</div>
+            <p>Set it as an environment variable only. Do not paste it into any file in your repository — your coding agent or Bluebox CLI will never ask you to.</p>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="comment"># Paste your values — the endpoint can also be fetched by the CLI</span>
+<span class="cmd">export</span> OTEL_EXPORTER_OTLP_ENDPOINT=<span class="str">"https://&lt;your-endpoint-from-bluebox-setup&gt;"</span>
+
+<span class="comment"># Paste the full header value from Bluebox Setup (do not include angle brackets)</span>
+<span class="cmd">export</span> OTEL_EXPORTER_OTLP_HEADERS=<span class="str">"&lt;header value from Bluebox Setup&gt;"</span>
+
+<span class="comment"># Start the app (pulls images, waits for readiness)</span>
+make up</pre>
+        </div>
+
+        <ol class="steps-list" start="6">
+          <li>When startup succeeds you'll see all of the containers up and healthy.</li>
+        </ol>
+        <img src="app-running.png" alt="Codespace terminal showing all containers started and healthy after make up" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 8px 0 16px;" />
+        <ol class="steps-list" start="7">
+          <li>Open the <strong>Ports</strong> panel in your Codespace.</li>
+          <li>Click <strong>Add Port</strong>, type <code>8080</code>.<br>Click the forwarded address for port <code>8088</code> to open the shop in your browser.</li>
+        </ol>
+        <img src="ports-panel.png" alt="Codespace Ports panel showing port 8088 forwarded with Open in Browser option" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 8px 0 12px;" />
+        <p>You should see products listed on the homepage.</p>
+        <img src="shop-homepage.png" alt="Workshop Shop homepage showing products listed" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 8px 0 4px;" />
+      </div>
+    </div>
+
+    <!-- STEP 5: Set up coding agent -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Set up your coding agent</div>
+      </div>
+      <div class="step-body">
+        <div class="tab-group">
+          <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(this,'tab-copilot')">GitHub Copilot</button>
+            <button class="tab-btn" onclick="switchTab(this,'tab-kiro-ide')">Kiro IDE</button>
+            <button class="tab-btn" onclick="switchTab(this,'tab-kiro-web')">Kiro Web</button>
+            <button class="tab-btn" onclick="switchTab(this,'tab-other')">Other Agent</button>
+          </div>
+
+          <!-- COPILOT -->
+          <div class="tab-content active" id="tab-copilot">
+            <p>GitHub Copilot runs directly inside the VS Code Codespace — no separate install needed.</p>
+            <ol class="steps-list">
+              <li>Install the Bluebox CLI in your Codespace terminal:</li>
+            </ol>
+            <div class="code-block" style="margin-bottom: 12px;">
+              <div class="code-block-header">
+                <span class="code-lang">bash — Codespace terminal</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre>curl -fsSL https://app.bluebox.ai/install.sh | bash</pre>
+            </div>
+            <ol class="steps-list" start="2">
+              <li>Follow the prompts. It will ask you to open another browser window and paste a code from your terminal for authentication.</li>
+              <li>Continue following the installer to set up Bluebox with <strong>GitHub Copilot</strong>. Install skills <strong>per-repo</strong> — we're only using this Codespace for this app.</li>
+              <li>You can <strong>skip OTel Instrumentation</strong> — that's already been handled for you.</li>
+              <li>Once complete you should see the Bluebox Setup Summary.</li>
+            </ol>
+            <img src="bluebox-setup-summary.png" alt="Bluebox setup summary showing GitHub connected, Copilot per-repo skills installed, and instrumentation skipped" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 8px 0 16px;" />
+            <ol class="steps-list" start="6">
+              <li>Verify GitHub Copilot is able to leverage Bluebox by asking in Copilot Chat:</li>
+            </ol>
+            <div class="prompt-box">
+              <div class="prompt-label">Copilot Chat</div>
+              <p>What Bluebox skills are available?</p>
+            </div>
+            <div class="callout success">
+              <div class="callout-icon">✅</div>
+              <div class="callout-body">
+                <div class="callout-label">What to expect</div>
+                <p>You should see the Bluebox skills listed in the chat response, and a new <code>.github/prompts/</code> folder will appear in your repo with the installed skill files.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- KIRO IDE -->
+          <div class="tab-content" id="tab-kiro-ide">
+            <p>Kiro IDE is an agentic IDE that connects to Bluebox directly. Install it on your local machine, then open your forked repo.</p>
+            <ol class="steps-list">
+              <li>Download and install Kiro from <a href="https://kiro.dev" target="_blank">kiro.dev</a>. Use the trial license code from your instructor.</li>
+              <li>Open Kiro and clone your fork:
+                <div class="code-block" style="margin-top: 8px;">
+                  <div class="code-block-header">
+                    <span class="code-lang">bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                  </div>
+                  <pre>git clone https://github.com/&lt;your-username&gt;/wad-workshop2026</pre>
+                </div>
+              </li>
+              <li>In the Kiro terminal, install the Bluebox CLI:</li>
+            </ol>
+            <div class="code-block">
+              <div class="code-block-header">
+                <span class="code-lang">bash — macOS / Linux</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre>curl -fsSL https://app.bluebox.ai/install.sh | bash</pre>
+            </div>
+            <ol class="steps-list" start="4">
+              <li>The installer runs <code>bluebox setup</code> automatically — it opens your browser for GitHub authentication, selects the workshop workspace, and installs skills into Kiro.</li>
+              <li>Verify in Kiro's Agent panel by asking:</li>
+            </ol>
+            <div class="prompt-box">
+              <div class="prompt-label">Kiro Agent panel</div>
+              <p>Using Bluebox, is the shop app connected and sending telemetry?</p>
+            </div>
+          </div>
+
+          <!-- KIRO WEB -->
+          <div class="tab-content" id="tab-kiro-web">
+            <p>Kiro Web runs in your browser — no local install. It needs a BLUEBOX_TOKEN secret and two steering files to connect to production data.</p>
+            <ol class="steps-list">
+              <li>Open <a href="https://kiro.dev" target="_blank">kiro.dev</a> and sign in with your GitHub account (use the trial license code from your instructor).</li>
+              <li>In Kiro Web Settings → <strong>Steering</strong>, add two custom steerings:</li>
+            </ol>
+
+            <p><strong>Steering 1 — "Download Bluebox CLI"</strong></p>
+            <div class="prompt-box">
+              <div class="prompt-label">Custom steering content</div>
+              <p>When the user asks a production question or asks you to fix a bug, first install the Bluebox CLI by downloading the correct binary for the detected OS/architecture from app.bluebox.ai/download/bluebox and authenticate it. Then use `bluebox ask` to query production data before touching code.</p>
+            </div>
+
+            <p><strong>Steering 2 — "Production Query with Bluebox CLI"</strong></p>
+            <div class="prompt-box">
+              <div class="prompt-label">Custom steering content</div>
+              <p>Always use `bluebox ask` to get production context before writing or reviewing code. Run: `bluebox ask "What are the current errors and performance issues?"` and write the output to a steering file in .kiro/steering/ before proceeding.</p>
+            </div>
+
+            <ol class="steps-list" start="3">
+              <li>In Bluebox Settings → <strong>CLI</strong>, click <strong>Create token</strong>, copy the token value.</li>
+              <li>In Kiro Web Settings → <strong>Secrets</strong>, add a secret named <code>BLUEBOX_TOKEN</code> with that value.</li>
+              <li>Verify by asking Kiro:</li>
+            </ol>
+            <div class="prompt-box">
+              <div class="prompt-label">Kiro Web</div>
+              <p>Using Bluebox, what services are connected to my workspace?</p>
+            </div>
+            <ol class="steps-list" start="6">
+              <li>Kiro may prompt you to install the Bluebox CLI after this first prompt. Follow the prompts to install it — this lets Kiro query live production data on your behalf.</li>
+            </ol>
+          </div>
+
+          <!-- OTHER AGENT -->
+          <div class="tab-content" id="tab-other">
+            <p>Any coding agent that can run shell commands or call MCP tools can work with Bluebox. The key steps are:</p>
+            <ol class="steps-list">
+              <li>Install the Bluebox CLI in your agent's environment: <code>curl -fsSL https://app.bluebox.ai/install.sh | bash</code></li>
+              <li>Run <code>bluebox setup</code> to authenticate and select the workshop workspace.</li>
+              <li>The CLI installs Bluebox skills into any supported agent it detects. For unsupported agents, ask your agent to run <code>bluebox ask "your question"</code> to query production data directly.</li>
+            </ol>
+            <div class="callout tip">
+              <div class="callout-icon">💡</div>
+              <div class="callout-body">
+                <div class="callout-label">The universal prompt</div>
+                <p>Prefix any question with <em>"Using Bluebox, …"</em> and your agent will know to call <code>bluebox ask</code> for live production context before responding.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="callout tip" style="margin-top: 16px;">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-label">Connecting your agent to Bluebox production data</div>
+            <p>When you're asked to query production in the labs, use the prompt: <em>"Using Bluebox, [your question here]"</em> — your agent will use the Bluebox skills or CLI to query live data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: Verify telemetry -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">Verify telemetry is flowing</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Browse the shop at the Codespace port 8088 address — add products to the cart, navigate around, and do a checkout to generate some traffic. Click around for a minute or two.
+            <div class="callout note" style="margin-top: 10px;">
+              <div class="callout-icon">ℹ️</div>
+              <div class="callout-body">
+                <div class="callout-label">Need the shop URL?</div>
+                <p>In your Codespace, open the <strong>Ports</strong> panel and click the forwarded address next to port <code>8088</code>.</p>
+              </div>
+            </div>
+          </li>
+          <li>Verify telemetry is flowing — open the <strong>Bluebox Setup page</strong> and confirm the checklist shows a green checkmark next to "Telemetry received".</li>
+        </ol>
+        <img src="bluebox-telemetry-flowing.png" alt="Bluebox fully set up with all steps complete and telemetry received" style="max-width:100%;border-radius:8px;border:1px solid #e5e7eb;margin:10px 0;">
+        <ol class="steps-list" start="3">
+          <li>Ask your coding agent:</li>
+        </ol>
+        <div class="prompt-box">
+          <div class="prompt-label">Try in your coding agent</div>
+          <p>Using Bluebox, what services are connected and what does the request flow look like for the shop API?</p>
+        </div>
+
+        <div class="checklist">
+          <h4>✅ Connections Checkpoint</h4>
+          <div class="checklist-item"><div class="check-box"></div><span>Bluebox account created and workshop workspace joined</span></div>
+          <div class="checklist-item"><div class="check-box"></div><span>Demo app forked and connected to Bluebox</span></div>
+          <div class="checklist-item"><div class="check-box"></div><span>Codespace running the workshop application</span></div>
+          <div class="checklist-item"><div class="check-box"></div><span>OTel env vars set and app started with <code>make up</code></span></div>
+          <div class="checklist-item"><div class="check-box"></div><span>Telemetry confirmed in Bluebox Setup page</span></div>
+          <div class="checklist-item"><div class="check-box"></div><span>Coding agent can query Bluebox production data</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LAB 1                                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section" id="lab1">
+    <div class="lab-header">
+      <div class="lab-number">1</div>
+      <div>
+        <div class="section-eyebrow">Lab 1 · ~45 minutes</div>
+        <div class="section-title" style="margin-bottom:4px;">Find &amp; Fix the Issue</div>
+      </div>
+    </div>
+    <p class="section-intro">The app has a production problem baked in. You'll generate load to trigger it, watch Bluebox detect it, investigate it, and use your coding agent to ship a fix — all grounded in live production evidence.</p>
+
+    <!-- PART A: Break it -->
+    <h3 class="subsection">Part A — Break It</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Generate load and try the app</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Open a <strong>second terminal</strong> in the Codespace and run the load generator:</li>
+        </ol>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash — second terminal</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre>make load</pre>
+        </div>
+        <ol class="steps-list" start="2">
+          <li>While it runs, open the shop in your browser and try to browse products. You should see the product list <strong>fail to load</strong> — the page goes blank or shows an error.</li>
+        </ol>
+        <p>The app will recover once the load generator stops after its 60s run. This scenario is one that happens all the time — <em>"It works on my laptop"</em> — but the real problems only surface once production load hits the app.</p>
+        <div class="callout tip">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-label">Re-run load if needed</div>
+            <p>If the shop recovers after the 60s run, run <code>make load</code> again. The problem is clearest under concurrent traffic.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Describe what you see to Bluebox</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>In Bluebox, click <strong>+ New chat</strong> in the sidebar (or go to <strong>Investigations → New investigation</strong>).</li>
+          <li>Describe what you experienced:</li>
+        </ol>
+        <div class="prompt-box">
+          <div class="prompt-label">Investigation prompt for Bluebox</div>
+          <p>Users are reporting that the product catalog and cart aren't loading — the page goes blank or shows an error when there's traffic on the app. What's causing this and what's the root cause?</p>
+        </div>
+        <p>Let it run and review the investigation as it progresses. It may take a few minutes to diagnose and find the root cause of the problem.</p>
+      </div>
+    </div>
+
+    <!-- PART B: Investigate -->
+    <h3 class="subsection">Part B — Investigate &amp; Create the Issue</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Review the Bluebox investigation</div>
+      </div>
+      <div class="step-body">
+        <p>Read through Bluebox's investigation results. Look for:</p>
+        <ul class="steps-list">
+          <li>The <strong>root cause</strong> — what is the specific failure?</li>
+          <li>The <strong>evidence</strong> — what telemetry data supports it?</li>
+          <li>The <strong>impact</strong> — which endpoints and how many requests are affected?</li>
+          <li>The <strong>recommended fix</strong> — what does Bluebox suggest?</li>
+        </ul>
+        <div class="callout tip">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-label">Ask follow-up questions</div>
+            <p>In the investigation chat, ask things like: <em>"Which endpoints are most affected?"</em> or <em>"Show me the error rate over time"</em> — Bluebox can answer with production data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Create a GitHub issue from the investigation</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Once Bluebox completes its investigation, it will automatically create a GitHub issue in your fork with the full root cause, evidence, and recommended fix attached.</li>
+          <li>Open the issue in GitHub and review the findings — this is what your coding agent will use as its starting point.</li>
+        </ol>
+        <img src="github-issue-example.png" alt="Example GitHub issue created by Bluebox showing root cause, hypotheses tested, and recommended actions" style="width: 100%; max-width: 680px; border-radius: 8px; border: 1px solid var(--gray-mid); margin: 12px 0 4px;" />
+      </div>
+    </div>
+
+    <!-- PART C: Fix -->
+    <h3 class="subsection">Part C — Fix It with Your Coding Agent</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Hand the issue to your coding agent</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Copy the GitHub issue URL from your fork.</li>
+          <li>In your coding agent, paste it and send this prompt:</li>
+        </ol>
+        <div class="prompt-box">
+          <div class="prompt-label">Coding agent prompt</div>
+          <p>Fix the issue described in this GitHub issue from Bluebox: [paste your GitHub issue URL here]
+
+Ask Bluebox for any additional production data you need to understand the scope of the problem before writing any code.</p>
+        </div>
+        <p>Your agent will:</p>
+        <ul class="steps-list">
+          <li>Read the GitHub issue and Bluebox investigation</li>
+          <li>Query Bluebox for any additional context it needs</li>
+          <li>Find the relevant code in the repository</li>
+          <li>Implement the fix</li>
+          <li>Push the changes as a pull request</li>
+        </ul>
+        <div class="callout note">
+          <div class="callout-icon">ℹ️</div>
+          <div class="callout-body">
+            <div class="callout-label">What the fix looks like</div>
+            <p>The root cause is an intentionally undersized database connection pool in <code>server.js</code>. Look for <code>databasePool</code> — the fix involves increasing pool capacity. Your agent should find this from the Bluebox evidence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">Merge and redeploy</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Review the pull request your agent created — check the code changes and confirm the fix addresses the root cause Bluebox identified.</li>
+        </ol>
+        <div class="callout warning">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body">
+            <div class="callout-label">Merge the PR first</div>
+            <p>Before running the commands below, <strong>merge the PR on GitHub</strong>. The <code>git pull</code> command will only pick up the fix once it's merged into your main branch.</p>
+          </div>
+        </div>
+        <ol class="steps-list" start="2">
+          <li>Once merged, redeploy in the Codespace:</li>
+        </ol>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash — Codespace terminal</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="comment"># Pull the merged fix and restart</span>
+git pull
+make down &amp;&amp; make up</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">7</div>
+        <div class="step-title">Validate the fix with Bluebox</div>
+      </div>
+      <div class="step-body">
+        <ol class="steps-list">
+          <li>Run the load generator again:</li>
+        </ol>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre>make load</pre>
+        </div>
+        <ol class="steps-list" start="2">
+          <li>Check the Bluebox Overview page — the error rate on <code>shop</code> should drop to near zero.</li>
+          <li>Browse the app in your browser and confirm products load normally.</li>
+          <li>Ask Bluebox directly:</li>
+        </ol>
+        <div class="prompt-box">
+          <div class="prompt-label">Validation prompt</div>
+          <p>Using Bluebox, is the shop API healthy now? Compare the error rate and latency before and after the recent deployment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h4>✅ Lab 1 Checkpoint</h4>
+      <div class="checklist-item"><div class="check-box"></div><span>Load generated and browser showed product catalog failure</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>Bluebox investigation completed with root cause identified</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>GitHub issue created from investigation</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>Coding agent referenced Bluebox data to write the fix</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>PR merged and app redeployed</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>Bluebox confirms error rate resolved</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LAB 2                                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section" id="lab2">
+    <div class="lab-header">
+      <div class="lab-number">2</div>
+      <div>
+        <div class="section-eyebrow">Lab 2 · ~45 minutes</div>
+        <div class="section-title" style="margin-bottom:4px;">Plan Before You Prompt</div>
+      </div>
+    </div>
+    <p class="section-intro">Now that we've fixed that issue, let's use Bluebox to help our coding agent plan and build a new feature. Before building something new, your coding agent checks with Bluebox: is the app healthy? What's the current behavior in production? How will a new feature affect what's already running? Then you build — grounded in reality, not assumptions.</p>
+
+    <!-- PART A -->
+    <h3 class="subsection">Part A — Health Check Before Building</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Generate some traffic</div>
+      </div>
+      <div class="step-body">
+        <p>Run the load generator again to build up fresh telemetry now that the fix is in place. In the Codespace terminal:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash — Codespace terminal</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre>make load</pre>
+        </div>
+        <p>This time the shop should stay up and serve traffic normally. Bluebox will pick up the healthy telemetry, giving your coding agent accurate production data to work from in the next steps.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Ask your coding agent to assess production health</div>
+      </div>
+      <div class="step-body">
+        <p>Before adding any new feature, have your coding agent query Bluebox for the current state of the app:</p>
+        <div class="prompt-box">
+          <div class="prompt-label">Coding agent prompt</div>
+          <p>Using Bluebox, assess whether the shop app is healthy and ready for a new feature deployment. Check: current error rates, p95 latency on key endpoints, any active findings or investigations. Tell me if there are any issues I should fix first.</p>
+        </div>
+        <p>Your agent will query Bluebox production telemetry and summarize the app's current health. If the Lab 1 fix worked, this should come back clean.</p>
+      </div>
+    </div>
+
+    <!-- PART B: Plan the feature -->
+    <h3 class="subsection">Part B — Plan and Build a New Feature</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Use Bluebox context to plan the feature</div>
+      </div>
+      <div class="step-body">
+        <p>Ask your coding agent to understand production behavior before designing anything:</p>
+        <div class="prompt-box">
+          <div class="prompt-label">Coding agent prompt</div>
+          <p>Using Bluebox, answer these questions before we start building:
+- What are the most viewed products in the shop right now?
+- What does a typical checkout flow look like end-to-end?
+- Are there any slow endpoints or database calls I should be aware of?
+
+Then, based on what you find, help me plan a "Flash Sale" feature — a sale badge on featured products with a discounted price shown in the catalog and cart.</p>
+        </div>
+        <p>Your agent will query live production data and use that context to inform the design — rather than guessing at product popularity or making assumptions about the code structure.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Build and deploy the Flash Sale feature</div>
+      </div>
+      <div class="step-body">
+        <p>Ask your agent to implement the feature:</p>
+        <div class="prompt-box">
+          <div class="prompt-label">Coding agent prompt</div>
+          <p>Implement the Flash Sale feature. Mark one or two products as "on sale" with a 20% discount. Show a sale badge in the product catalog (frontend/index.html or frontend/app.js). Make sure the discounted price shows in both the catalog view and the cart. Create a PR with the changes.</p>
+        </div>
+        <ol class="steps-list">
+          <li>Review the PR and merge it on GitHub.</li>
+          <li>Redeploy in the Codespace:</li>
+        </ol>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash — Codespace terminal</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre>git pull
+make down &amp;&amp; make up</pre>
+        </div>
+        <ol class="steps-list" start="3">
+          <li>Open the shop in your browser and confirm the sale badge appears on the featured products.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- PART C: 100X -->
+    <h3 class="subsection">Part C — What Breaks at 100× Traffic?</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Scenario: A marketing campaign is coming</div>
+      </div>
+      <div class="step-body">
+        <p>The Flash Sale is going live on social media. Marketing expects traffic to spike to <strong>100× current levels</strong> when the campaign drops. Before allocating infrastructure resources, you want to know: <em>what actually breaks first?</em></p>
+        <p>Ask your coding agent to use Bluebox to model the risk:</p>
+        <div class="prompt-box">
+          <div class="prompt-label">Coding agent prompt</div>
+          <p>Using Bluebox, analyze the current production behavior of the shop app. If traffic increased 100 times, what are the most likely failure points? Look at:
+- Database connection patterns and pool behavior
+- Payment service latency and timeout behavior
+- Any endpoints that are already slow or resource-intensive
+
+For each bottleneck you find, suggest what would need to change to handle 100× traffic. We are NOT deploying these changes yet — this is planning only.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Review the bottleneck analysis</div>
+      </div>
+      <div class="step-body">
+        <p>Your agent will return an analysis grounded in actual production telemetry — not generic architecture advice. Look for:</p>
+        <ul class="steps-list">
+          <li>Specific endpoints with high DB utilization</li>
+          <li>Payment service timeout behavior under concurrent load</li>
+          <li>Pool or queue limits that would saturate first</li>
+          <li>Recommended infrastructure or code changes per bottleneck</li>
+        </ul>
+        <div class="callout success">
+          <div class="callout-icon">✅</div>
+          <div class="callout-body">
+            <div class="callout-label">The key insight</div>
+            <p>This is the difference between Bluebox-grounded planning and traditional capacity planning: instead of estimating from load test models or guessing, you're making decisions from actual production behavior traces. The bottlenecks Bluebox surfaces are the ones that will actually fail — not theoretical ones.</p>
+          </div>
+        </div>
+        <p>You don't need to implement these changes in the workshop. The goal is to see how production data changes the conversation before you commit infrastructure spend.</p>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h4>✅ Lab 2 Checkpoint</h4>
+      <div class="checklist-item"><div class="check-box"></div><span>Coding agent assessed production health via Bluebox before building</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>Bluebox production context used to plan the Flash Sale feature</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>Flash Sale feature implemented, deployed, and visible in the browser</span></div>
+      <div class="checklist-item"><div class="check-box"></div><span>100× traffic bottleneck analysis completed with production-grounded findings</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LAB 3 (OPTIONAL)                            -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section" id="lab3">
+    <div class="lab-header">
+      <div class="lab-number optional">★</div>
+      <div>
+        <div class="section-eyebrow">Optional Lab 3 — If you have time</div>
+        <div class="section-title" style="margin-bottom:4px;">Turn Bluebox on Your Own App</div>
+      </div>
+    </div>
+    <p class="section-intro">If you have a real app — at work or a side project — try connecting it to Bluebox. Everything you set up here is yours to keep: the Bluebox account is free to use after the workshop with no expiry date.</p>
+
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <div class="callout-label">Your free tier</div>
+        <p>The Bluebox account you created today is free to keep — no time limit, no credit card required. Everything you set up in this lab will continue working after you leave today.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Understand workspaces and create one for your app</div>
+      </div>
+      <div class="step-body">
+        <p>A <strong>workspace</strong> is your environment in Bluebox — it holds your GitHub repository connection, OTel telemetry, findings, and investigations. Each workspace connects to <strong>one repository</strong>, so if you have multiple apps to monitor, you'll create a separate workspace for each.</p>
+        <p>You already have a default workspace from when you signed up (it's named after your GitHub username). You can use that one for your app, or create a fresh one:</p>
+        <ul class="steps-list">
+          <li>Open the workspace menu in the top-left of Bluebox</li>
+          <li>Select your existing personal workspace, or go to <strong>Settings → Add workspace</strong> to create a new one</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Add your GitHub repository</div>
+      </div>
+      <div class="step-body">
+        <p>In your personal workspace, go to <strong>Settings → Setup</strong>:</p>
+        <ul class="steps-list">
+          <li>Under GitHub, authorize Bluebox for the organization or account that owns your app's repo</li>
+          <li>Find and select your application's repository</li>
+          <li>Click <strong>Confirm 1 repo</strong></li>
+        </ul>
+        <div class="callout note">
+          <div class="callout-icon">ℹ️</div>
+          <div class="callout-body">
+            <div class="callout-label">One repo per workspace</div>
+            <p>Bluebox monitors one repository per workspace. If you have multiple apps to monitor, create a separate workspace for each.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Clone your repo in your coding agent and run Bluebox setup</div>
+      </div>
+      <div class="step-body">
+        <p>Open your repository in your coding agent of choice. You can install the Bluebox CLI by asking your agent directly:</p>
+        <div class="prompt-box">
+          <div class="prompt-label">Coding agent prompt</div>
+          <p>Install Bluebox CLI from https://app.bluebox.ai without piping a remote script into a shell. Download the installer for your platform — https://app.bluebox.ai/install.sh for macOS/Linux, https://app.bluebox.ai/install.ps1 for Windows PowerShell, or https://app.bluebox.ai/install.cmd for Windows Command Prompt — to a local file, show me what it will do, then run it to start Bluebox setup.</p>
+        </div>
+        <p>Or install it yourself directly in your terminal:</p>
+        <div class="tab-group" style="margin-top: 12px;">
+          <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(this,'tab-install-mac')">macOS / Linux</button>
+            <button class="tab-btn" onclick="switchTab(this,'tab-install-ps')">Windows PowerShell</button>
+            <button class="tab-btn" onclick="switchTab(this,'tab-install-cmd')">Windows CMD</button>
+          </div>
+          <div class="tab-content active" id="tab-install-mac">
+            <div class="code-block">
+              <div class="code-block-header">
+                <span class="code-lang">bash</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre>curl -fsSL https://app.bluebox.ai/install.sh | bash</pre>
+            </div>
+          </div>
+          <div class="tab-content" id="tab-install-ps">
+            <div class="code-block">
+              <div class="code-block-header">
+                <span class="code-lang">powershell</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre>irm https://app.bluebox.ai/install.ps1 | iex</pre>
+            </div>
+          </div>
+          <div class="tab-content" id="tab-install-cmd">
+            <div class="code-block">
+              <div class="code-block-header">
+                <span class="code-lang">cmd</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre>curl -fsSL https://app.bluebox.ai/install.cmd -o install.cmd && install.cmd && del install.cmd</pre>
+            </div>
+          </div>
+        </div>
+        <p>When prompted during setup, select your <strong>personal workspace</strong>. Bluebox will confirm the connection and install its skills into your coding agent.</p>
+        <div class="callout tip">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-label">Keeping the CLI up to date</div>
+            <p>To update the CLI later, run <code>bluebox update</code> or re-run the installer command above — both update to the latest version.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Instrument your app with OpenTelemetry</div>
+      </div>
+      <div class="step-body">
+        <p>Paste this prompt into your coding agent to add OpenTelemetry instrumentation:</p>
+        <div class="prompt-box">
+          <div class="prompt-label">Coding agent prompt</div>
+          <p>Add OpenTelemetry to this project — use the Bluebox instrumentation skill</p>
+        </div>
+        <p>Your agent will use the installed Bluebox instrumentation skill to wire up the OTel SDK for your language and framework. It will:</p>
+        <ul class="steps-list">
+          <li>Add the required OTel dependencies</li>
+          <li>Configure your service to export traces to Bluebox's OTLP endpoint</li>
+          <li>Fetch the endpoint automatically using <code>bluebox otlp-endpoint</code></li>
+        </ul>
+        <div class="callout warning">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body">
+            <div class="callout-label">Ingest token</div>
+            <p>Your ingest token is intentionally kept out of files and CLI output. Copy it from the Bluebox Setup page and provide it as an environment variable or secret — never commit it to your repository.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Merge and redeploy your app</div>
+      </div>
+      <div class="step-body">
+        <p>Review the instrumentation changes your agent made, merge the PR, and redeploy your application to your hosting environment.</p>
+        <p>Once it's running, return to the Bluebox Setup page — it will confirm when telemetry data arrives. The Overview page will then show your services, and any active problems will appear as Findings automatically.</p>
+        <div class="callout note">
+          <div class="callout-icon">ℹ️</div>
+          <div class="callout-body">
+            <div class="callout-label">Setup page shows pending</div>
+            <p>If the Setup page shows the connection as pending, leave it open — telemetry confirmation updates automatically once your service sends its first traces.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">Explore — your app, your way</div>
+      </div>
+      <div class="step-body">
+        <p>You're now connected. The same workflows from Labs 1 and 2 apply to your real production system. Try any of these:</p>
+        <ul class="steps-list">
+          <li><strong>Investigate a real problem:</strong> Click Investigate on any Finding on the Overview page, or start a new investigation from the sidebar and describe an issue you've been meaning to look into.</li>
+          <li><strong>Ask your coding agent about production:</strong> <em>"Using Bluebox, what are the most common errors in our app over the last 7 days?"</em> — your agent queries live telemetry and gives you answers grounded in what's actually happening.</li>
+          <li><strong>Plan a new feature:</strong> Describe something you've been wanting to build, ask your agent to query production first, and let it draft an architecture plan grounded in your real service behavior.</li>
+        </ul>
+        <div class="callout tip">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-label">Your free tier — no expiry</div>
+            <p>Your Bluebox account includes ongoing access to findings, investigations, and production queries. You can continue using it for your own projects after the workshop with no expiry date and no credit card required.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TROUBLESHOOTING                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section" id="troubleshooting">
+    <div class="section-eyebrow">Reference</div>
+    <div class="section-title">Troubleshooting</div>
+    <p class="section-intro">Common issues and quick fixes. If you're stuck during the workshop, check here first before asking for help.</p>
+
+    <h3 class="subsection">Workspace &amp; CLI</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num" style="background: var(--gray-mid); color: var(--dark);">?</div>
+        <div class="step-title">Your coding agent is querying the wrong app's data</div>
+      </div>
+      <div class="step-body">
+        <p>If you have multiple workspaces in your Bluebox account (for example, a personal workspace and a workshop workspace), the CLI and your coding agent may be pointed at the wrong one. You can check which workspace is active and switch it:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="comment"># See all workspaces and which one is currently active</span>
+bluebox workspace list
+
+<span class="comment"># Switch to a different workspace by name</span>
+bluebox workspace switch</pre>
+        </div>
+        <p>You can also pass a workspace flag directly on a single query without switching permanently:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre>bluebox ask --workspace &lt;workspace-name&gt; "What services are connected?"</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num" style="background: var(--gray-mid); color: var(--dark);">?</div>
+        <div class="step-title">The <code>bluebox</code> command is not found after install</div>
+      </div>
+      <div class="step-body">
+        <p>Open a new terminal window, or add the install directory to your PATH for the current session:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre>export PATH="$HOME/.bluebox/bin:$PATH"</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num" style="background: var(--gray-mid); color: var(--dark);">?</div>
+        <div class="step-title">The CLI says my token expired</div>
+      </div>
+      <div class="step-body">
+        <p>CLI sign-in tokens expire after 14 days of inactivity. Re-authenticate with:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre>bluebox auth login</pre>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subsection">GitHub &amp; Telemetry</h3>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num" style="background: var(--gray-mid); color: var(--dark);">?</div>
+        <div class="step-title">I'm not seeing my GitHub repository in Setup</div>
+      </div>
+      <div class="step-body">
+        <p>Confirm the Bluebox GitHub App is installed on the correct account. The Setup page will show an install prompt if the app is missing. Make sure you granted access to your forked repository specifically — granting access to "all repositories" also works.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num" style="background: var(--gray-mid); color: var(--dark);">?</div>
+        <div class="step-title">Bluebox Setup shows telemetry as pending</div>
+      </div>
+      <div class="step-body">
+        <p>Leave the Setup page open — it updates automatically when your service sends its first traces. Make sure the app is running (<code>make clean</code> completed without errors) and that you set both <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> and <code>OTEL_EXPORTER_OTLP_HEADERS</code> in the same terminal session before starting. Browse the shop app to generate some traffic — telemetry only flows when the app receives requests.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <div class="callout-label">Still stuck?</div>
+        <p>Check the full <a href="https://docs.bluebox.ai/faq" target="_blank">Bluebox FAQ</a> or ask your workshop instructor for help.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────── -->
+  <div class="footer">
+    <p>Built with <a href="https://bluebox.ai" target="_blank">Bluebox</a> by Dynatrace · <a href="https://docs.bluebox.ai" target="_blank">Documentation</a> · <a href="https://github.com/JasonOstroski/wad-workshop2026" target="_blank">Demo App Repo</a></p>
+    <p style="color: var(--gray-border)">WeAreDevelopers Workshop</p>
+  </div>
+
+</main>
+
+<script>
+  // ── Copy buttons ─────────────────────────────────────
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  // ── Tabs ─────────────────────────────────────────────
+  function switchTab(btn, contentId) {
+    const group = btn.closest('.tab-group');
+    group.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    group.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(contentId).classList.add('active');
+  }
+
+  // ── Active nav on scroll ─────────────────────────────
+  const sections = ['connections', 'lab1', 'lab2', 'lab3'];
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.25 });
+
+  document.querySelectorAll('[id]').forEach(el => {
+    if (['overview','connections','lab1','lab2','lab3'].includes(el.id)) observer.observe(el);
+  });
+
+  // ── Close sidebar on mobile nav click ────────────────
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
